@@ -7,7 +7,7 @@
 **Team:** [Your Team Name]
 **Persona:** Food Delivery Partners — Zomato & Swiggy (Hyderabad)
 **Platform:** Progressive Web App (Mobile-first)
-**Phase 1 Prototype:** [🔗 Live Demo](https://your-demo-link-here.com)
+**Phase 1 Prototype:** [🔗 Live Demo](https://69b3145feb91d31045f764bc--gigshield.netlify.app/)
 **Demo Video:** [▶️ Watch on YouTube](https://your-video-link-here.com)
 
 ---
