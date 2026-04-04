@@ -1,73 +1,173 @@
-import React from 'react'
+import React from 'react';
 
 const pages = [
   { id: 'dashboard', label: 'Dashboard', icon: '⬡' },
   { id: 'policy',    label: 'My Policy',  icon: '◈' },
   { id: 'claims',    label: 'Claims',     icon: '◎' },
   { id: 'triggers',  label: 'Live Monitor', icon: '◉' },
-]
+];
 
 export default function Nav({ activePage, setActivePage, worker, triggerAlert }) {
   return (
-    <nav style={{
-      position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-      background: 'rgba(13,15,26,0.97)', backdropFilter: 'blur(12px)',
-      borderBottom: '1px solid rgba(255,255,255,0.07)',
-      height: '64px', display: 'flex', alignItems: 'center',
-      padding: '0 24px', justifyContent: 'space-between',
-    }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-        <div style={{
-          fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: '1.3rem',
-          color: '#fff', letterSpacing: '-0.5px',
-        }}>
-          Gig<span style={{ color: '#ff5722' }}>Shield</span>
-        </div>
-        <div style={{
-          background: 'rgba(255,87,34,0.12)', border: '1px solid rgba(255,87,34,0.25)',
-          borderRadius: '20px', padding: '2px 10px',
-          fontSize: '0.68rem', fontWeight: 700, color: '#ff5722', letterSpacing: '0.5px',
-        }}>PHASE 2</div>
-      </div>
+    <>
+      <style>{`
+        .nav-root {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 100;
+          background: linear-gradient(90deg, #0d0d1a 0%, #1a1a2e 50%, #0d0d1a 100%);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+          height: 64px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0 2.5rem;
+          font-family: 'Poppins', system-ui, sans-serif;
+        }
 
-      <div style={{ display: 'flex', gap: '4px' }}>
-        {pages.map(p => (
-          <button key={p.id} onClick={() => setActivePage(p.id)} style={{
-            background: activePage === p.id ? 'rgba(255,87,34,0.15)' : 'transparent',
-            border: activePage === p.id ? '1px solid rgba(255,87,34,0.3)' : '1px solid transparent',
-            borderRadius: '8px', padding: '7px 14px', cursor: 'pointer',
-            color: activePage === p.id ? '#ff5722' : 'rgba(255,255,255,0.5)',
-            fontSize: '0.83rem', fontWeight: activePage === p.id ? 600 : 400,
-            transition: 'all .2s', display: 'flex', alignItems: 'center', gap: '6px',
-          }}>
-            <span style={{ fontSize: '0.9rem' }}>{p.icon}</span>
-            {p.label}
-            {p.id === 'triggers' && triggerAlert && (
-              <span style={{
-                width: '7px', height: '7px', borderRadius: '50%',
-                background: '#ef4444', display: 'inline-block',
-                animation: 'pulse 1.5s infinite',
-              }}/>
-            )}
-          </button>
-        ))}
-      </div>
+        .logo {
+          font-family: 'Cinzel', serif;
+          font-weight: 700;
+          font-size: 1.5rem;
+          letter-spacing: 0.08em;
+          color: #e8d5b7;
+          text-transform: uppercase;
+        }
+        .logo-accent {
+          color: #b8860b;
+        }
+        .phase-badge {
+          background: linear-gradient(135deg, #b8860b, #daa520);
+          border: none;
+          border-radius: 3rem;
+          padding: 0.2rem 0.6rem;
+          font-size: 0.6rem;
+          font-weight: 600;
+          color: #0d0d1a;
+          margin-left: 0.75rem;
+          letter-spacing: 0.1em;
+        }
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-        <div style={{
-          width: '32px', height: '32px', borderRadius: '50%',
-          background: 'rgba(255,87,34,0.2)', display: 'flex',
-          alignItems: 'center', justifyContent: 'center',
-          fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '0.8rem', color: '#ff5722',
-        }}>
-          {worker?.name?.charAt(0)?.toUpperCase() || 'W'}
-        </div>
-        <div style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.6)' }}>
-          {worker?.name?.split(' ')[0] || 'Worker'}
-        </div>
-      </div>
+        .nav-links {
+          display: flex;
+          gap: 0.6rem;
+        }
+        .nav-btn {
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid rgba(184, 134, 11, 0.2);
+          border-radius: 0.5rem;
+          padding: 0.5rem 1.2rem;
+          cursor: pointer;
+          color: #a0a0a0;
+          font-size: 0.8rem;
+          font-weight: 500;
+          transition: all 0.25s ease;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-family: 'Poppins', sans-serif;
+        }
+        .nav-btn i {
+          font-style: normal;
+          font-size: 0.95rem;
+        }
+        .nav-btn.active {
+          background: linear-gradient(135deg, #b8860b 0%, #cd950c 100%);
+          border-color: #daa520;
+          color: #0d0d1a;
+          font-weight: 600;
+          box-shadow: 0 2px 10px rgba(184, 134, 11, 0.3);
+        }
+        .nav-btn:not(.active):hover {
+          background: rgba(184, 134, 11, 0.1);
+          border-color: #b8860b;
+          color: #e8d5b7;
+        }
+        .trigger-dot {
+          display: inline-block;
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: #ff4757;
+          margin-left: 0.3rem;
+          animation: pulse-alert 1.2s infinite;
+        }
 
-      <style>{`@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}`}</style>
-    </nav>
-  )
+        .user-section {
+          display: flex;
+          align-items: center;
+          gap: 0.7rem;
+        }
+        .avatar {
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, #b8860b, #8b6914);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          fontFamily: "'Cinzel', serif";
+          font-weight: 700;
+          font-size: 0.85rem;
+          color: #0d0d1a;
+          border: 2px solid #daa520;
+        }
+        .user-name {
+          font-size: 0.8rem;
+          font-weight: 500;
+          color: #c0c0c0;
+          font-family: 'Poppins', sans-serif;
+        }
+
+        @keyframes pulse-alert {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        @media (max-width: 680px) {
+          .nav-root { padding: 0 1rem; }
+          .nav-btn { padding: 0.4rem 0.7rem; font-size: 0.7rem; }
+          .logo { font-size: 1.1rem; }
+          .user-name { display: none; }
+          .phase-badge { display: none; }
+        }
+      `}</style>
+
+      <nav className="nav-root">
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <div className="logo">
+            Gig<span className="logo-accent">Shield</span>
+          </div>
+          <div className="phase-badge">INSURE</div>
+        </div>
+
+        <div className="nav-links">
+          {pages.map(p => (
+            <button
+              key={p.id}
+              onClick={() => setActivePage(p.id)}
+              className={`nav-btn ${activePage === p.id ? 'active' : ''}`}
+            >
+              <i>{p.icon}</i>
+              {p.label}
+              {p.id === 'triggers' && triggerAlert && (
+                <span className="trigger-dot" />
+              )}
+            </button>
+          ))}
+        </div>
+
+        <div className="user-section">
+          <div className="avatar">
+            {worker?.name?.charAt(0)?.toUpperCase() || 'G'}
+          </div>
+          <div className="user-name">
+            {worker?.name?.split(' ')[0] || 'User'}
+          </div>
+        </div>
+      </nav>
+    </>
+  );
 }

@@ -15,9 +15,9 @@ export default function App() {
 
   // Load from localStorage on mount
   useEffect(() => {
-    const saved = localStorage.getItem('gs_worker')
-    const savedPolicy = localStorage.getItem('gs_policy')
-    const savedClaims = localStorage.getItem('gs_claims')
+    const saved = localStorage.getItem('wfr_worker')
+    const savedPolicy = localStorage.getItem('wfr_policy')
+    const savedClaims = localStorage.getItem('wfr_claims')
     if (saved) setWorker(JSON.parse(saved))
     if (savedPolicy) setPolicy(JSON.parse(savedPolicy))
     if (savedClaims) setClaims(JSON.parse(savedClaims))
@@ -26,24 +26,24 @@ export default function App() {
   const saveWorker = (w) => {
     const withId = { ...w, id: 'GS' + Date.now().toString().slice(-6), registered: true }
     setWorker(withId)
-    localStorage.setItem('gs_worker', JSON.stringify(withId))
+    localStorage.setItem('wfr_worker', JSON.stringify(withId))
   }
 
   const savePolicy = (p) => {
     setPolicy(p)
-    localStorage.setItem('gs_policy', JSON.stringify(p))
+    localStorage.setItem('wfr_policy', JSON.stringify(p))
   }
 
   const addClaim = (c) => {
     const updated = [c, ...claims]
     setClaims(updated)
-    localStorage.setItem('gs_claims', JSON.stringify(updated))
+    localStorage.setItem('wfr_claims', JSON.stringify(updated))
   }
 
   const updateWorker = (updates) => {
     const updated = { ...worker, ...updates }
     setWorker(updated)
-    localStorage.setItem('gs_worker', JSON.stringify(updated))
+    localStorage.setItem('wfr_worker', JSON.stringify(updated))
   }
 
   // Not registered yet — show registration
@@ -52,7 +52,7 @@ export default function App() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0d0f1a' }}>
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%)' }}>
       <Nav activePage={activePage} setActivePage={setActivePage} worker={worker} triggerAlert={triggerAlert} />
       <div style={{ paddingTop: '64px' }}>
         {activePage === 'dashboard' && (
