@@ -312,11 +312,11 @@ export default function Dashboard({ worker, policy, claims, setActivePage }) {
           <div className="chart-header">
             <div>
               <div style={{ fontFamily: "'Cinzel', serif", fontWeight: 700, marginBottom: '2px' }}>Weekly Earnings vs Protected Income</div>
-              <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Orange = GigShield payout received during disruption weeks</div>
+              <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Orange = WeForRiders payout received during disruption weeks</div>
             </div>
             <div className="legend">
               <div><span className="legend-dot" style={{ background: '#4a90d9' }}></span>Earnings</div>
-              <div><span className="legend-dot" style={{ background: '#b8860b' }}></span>GigShield payout</div>
+              <div><span className="legend-dot" style={{ background: '#b8860b' }}></span>WeForRiders payout</div>
             </div>
           </div>
           <ResponsiveContainer width="100%" height={180}>

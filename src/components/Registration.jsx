@@ -300,7 +300,7 @@ export default function Registration({ onComplete }) {
             <>
               <div className="reg-header">
                 <div className="step-badge">Step 1 — Login</div>
-                <div className="reg-title">Welcome to GigShield</div>
+                <div className="reg-title">Welcome to WeForRiders</div>
                 <div className="reg-desc">Income protection for delivery partners</div>
               </div>
               <div className="reg-body">

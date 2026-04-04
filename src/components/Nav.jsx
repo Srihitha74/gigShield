@@ -138,7 +138,7 @@ export default function Nav({ activePage, setActivePage, worker, triggerAlert })
       <nav className="nav-root">
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <div className="logo">
-            Gig<span className="logo-accent">Shield</span>
+            we<span className="logo-accent">ForRiders</span>
           </div>
           <div className="phase-badge">INSURE</div>
         </div>
